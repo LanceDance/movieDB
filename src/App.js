@@ -22,6 +22,7 @@ function App() {
       const getDocuments = await   axios("https://api.themoviedb.org/3/movie/popular?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1&with_genres=99");
       const getMovies = await axios("https://api.themoviedb.org/3/movie/top_rated?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1");
       const getTv = await axios("https://api.themoviedb.org/3/tv/popular?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1")
+    console.log(getMovies.data)
     setState({results: getMovies.data.results.concat(getDocuments.data.results, getTv.data.results)});
     };
   fetchData();
@@ -30,18 +31,24 @@ function App() {
   const apiurl = "https://api.themoviedb.org/3/search/multi?api_key=efb6a90a6e954769821cddc6d87e9acb";
   const apii = "https://api.themoviedb.org/3/"
   const api_key = "?api_key=efb6a90a6e954769821cddc6d87e9acb"
-  const search = (e) => {
+  const search_query = apiurl + "&query=" + state.s
+  const search = async (e) => {
     if (e.key === "Enter")
+    // const searchResults = await axios(search_query)
+    // setState(prevState => {
+    //   return {...prevState, results: searchResults.data.results}
+    // })
+    
     axios(apiurl + "&query=" + state.s).then(({data}) => {
       let results  = data.results;
-      console.log(results)
 
       setState(prevState => {
         return {...prevState, results: results}
       })
     })
-  }
+    .catch(error => console.log('aaa'))
 
+  }
   const handleInput = (e) => {
     let s = e.target.value;
   
