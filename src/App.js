@@ -13,13 +13,18 @@ function App() {
     results: [],
     selected: {}
   });
+ 
 
+
+  
   useEffect(() => {
-    axios
-    .get("https://api.themoviedb.org/3/movie/popular?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1&with_genres=99")
-    .then(({data}) =>{
-      setState(data)
-    })
+    const fetchData = async () => {
+      const getDocuments = await   axios("https://api.themoviedb.org/3/movie/popular?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1&with_genres=99");
+      const getMovies = await axios("https://api.themoviedb.org/3/movie/top_rated?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1");
+      const getTv = await axios("https://api.themoviedb.org/3/tv/popular?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1")
+    setState({results: getMovies.data.results.concat(getDocuments.data.results, getTv.data.results)});
+    };
+  fetchData();
   }, [])
 
   const apiurl = "https://api.themoviedb.org/3/search/multi?api_key=efb6a90a6e954769821cddc6d87e9acb";
