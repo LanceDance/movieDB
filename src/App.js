@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import Search from './components/Search'
 import Result from './components/Result'
 import BestMovies from './components/BestMovies'
@@ -11,21 +11,19 @@ function App() {
   const [state, setState] = useState({
     s: "",
     results: [],
-    selected: {}
+    selected: {},
+    whatprogram: []
   });
- 
-
-
+ const dataApi = async () => {
   
-  useEffect(() => {
-    const fetchData = async () => {
-      const getDocuments = await   axios("https://api.themoviedb.org/3/movie/popular?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1&with_genres=99");
-      const getMovies = await axios("https://api.themoviedb.org/3/movie/top_rated?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1");
-      const getTv = await axios("https://api.themoviedb.org/3/tv/popular?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1")
-    console.log(getMovies.data)
-    setState({results: getMovies.data.results.concat(getDocuments.data.results, getTv.data.results)});
-    };
-  fetchData();
+  const getDocuments = await   axios("https://api.themoviedb.org/3/movie+/popular?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1&with_genres=99");
+  const getMovies = await axios("https://api.themoviedb.org/3/movie/top_rated?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1");
+  const getTv = await axios("https://api.themoviedb.org/3/tv/top_rated?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1")
+  setState({results: getMovies.data.results.concat(getDocuments.data.results, getTv.data.results) });
+ }
+  
+  useEffect(() => {    
+    dataApi();
   }, [])
 
   const apiurl = "https://api.themoviedb.org/3/search/multi?api_key=efb6a90a6e954769821cddc6d87e9acb";
@@ -46,7 +44,7 @@ function App() {
         return {...prevState, results: results}
       })
     })
-    .catch(error => console.log('aaa'))
+    .catch(error => dataApi())
 
   }
   const handleInput = (e) => {
@@ -98,7 +96,6 @@ const getdata = () => {
         
         {/* <h1>Best Movies</h1>
         < BestMovies /> */}
-        <h1>BEst TV</h1>
         {/* <BestTv/> */}
         {/* <h1>Documentary</h1>
         <Documentary/> */}
