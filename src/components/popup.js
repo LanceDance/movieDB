@@ -1,11 +1,8 @@
 import React from 'react'
 import VideoPlayer from './VideoPlayer'
-import {picture, imgUrl} from '../pictures'
+import { FindPoster } from "../functionsForComponents";
 function Popup({selected, closePopup}) {
-    let poster = imgUrl+selected.poster_path
-    if (selected.poster_path === null) {
-        poster = picture
-    }
+ 
     return (
         <section className="popup">
             <div className="content">
@@ -13,13 +10,11 @@ function Popup({selected, closePopup}) {
                     
                    </span></h2>
                     <div className="plot">
-                        <img src={poster} alt= '' />
+                        <img src={FindPoster(selected)} alt= '' />
                         <p>
                         {selected.overview} 
                         <br/><br/>
                         <VideoPlayer/> 
-                         
-                         
                         </p>
                     <p>Popularity: {selected.popularity}</p>
                     </div>

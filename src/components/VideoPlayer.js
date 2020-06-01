@@ -1,5 +1,6 @@
 import React from 'react';
 import shaka from 'shaka-player';
+import { picture} from "../pictures";
 
 class VideoPlayer extends React.PureComponent{
 
@@ -32,11 +33,10 @@ class VideoPlayer extends React.PureComponent{
 
 		var player = new shaka.Player(video);
 
-		// Listen for error events.
+		// error events.
   		player.addEventListener('error', this.onErrorEvent);
 
-  		// Try to load a manifest.
-	  	// This is an asynchronous process.
+  		// load a manifest.
 	  	player.load(manifestUri).then(function() {
 		    // This runs if the asynchronous load is successful.
 		    console.log('The video has now been loaded!');
@@ -50,7 +50,7 @@ class VideoPlayer extends React.PureComponent{
 				<video 
 					width="450"
 					ref={this.videoComponent}
-					poster="//shaka-player-demo.appspot.com/assets/poster.jpg"
+					poster={picture}
 					controls
 				/>
 		);
