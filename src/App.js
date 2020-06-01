@@ -5,6 +5,7 @@ import Popup from './components/Popup'
 import axios from 'axios'
 import {moviesTop, moviesDocuments, moviesFamilies, tvTop, searchUrlMulti, firstPartOfCall} from "./apicalls";
 import { apiKey } from './Apikey'
+import { findName } from "./functionsForComponents";
 function App() {
 
   //prepare set state
@@ -30,16 +31,16 @@ function App() {
   // object gendre. For more calls this is not optinal! Maybe use endpoit with collection and filter only movies and tv,
   // but in that call we cannot find top rated. 
   result[3].data.results.forEach((item) => {
-    item.gender = "tv"
+    item.media_type = "tv"
   });
   result[0].data.results.forEach((item) => {
-    item.gender = "movie"
+    item.media_type = "movie"
   });
   result[1].data.results.forEach((item) => {
-    item.gender = "movie"
+    item.media_type= "movie"
   });
   result[2].data.results.forEach((item) => {
-      item.gender = "movie"
+      item.media_type = "movie"
     }); 
   // initializing setState
   setState({results: result[1].data.results.concat(result[3].data.results, result[0].data.results, result[2].data.results), selected: {} });
@@ -66,7 +67,6 @@ function App() {
   const handleInput = (e) => {
     let s = e.target.value;
   
-
   setState(prevState => {
     return {
       ...prevState, s:s
@@ -74,16 +74,10 @@ function App() {
   })
 
 }
-// kind of strange that tv and movie have different key name for name of movie or tv
-let movieName = null
-  if (state.selected.title) {
-    movieName = state.selected.title
-  }
-  else if (state.selected.name) {
-    movieName = state.selected.name
-  }
+// strange is that tv and movie have different key name for name of movie or tv
+let movieName = findName(state.selected)
  
-  
+  //popup which brings back the one object after click
   const openPopup = (id, gender) => {
     const apiUrl = firstPartOfCall+gender+"/"+id+"?api_key="+apiKey;
     axios(apiUrl)
@@ -96,7 +90,7 @@ let movieName = null
 
     })
   }
-
+  //close popup and goes back to state
   const closePopup = () => {
     setState(prevState =>{
       return {...prevState, selected: {} }

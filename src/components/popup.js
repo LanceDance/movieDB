@@ -1,20 +1,27 @@
 import React from 'react'
-
+import VideoPlayer from './VideoPlayer'
+import { FindPoster } from "../functionsForComponents";
 function Popup({selected, closePopup}) {
-    const img_url = "http://image.tmdb.org/t/p/w500/";
-    console.log(selected)
+ 
     return (
         <section className="popup">
             <div className="content">
-                <h2>Name <span> Year
+                <h2>{selected.title}    <span> 
+                    
                    </span></h2>
                     <div className="plot">
-                        <img src={img_url+selected.poster_path} />
-                        <p>{selected.overview}</p>
+                        <img src={FindPoster(selected)} alt= '' />
+                        <p>
+                        {selected.overview} 
+                        <br/><br/>
+                        <VideoPlayer/> 
+                        </p>
+                    <p>Popularity: {selected.popularity}</p>
                     </div>
                     <button className="close" onClick={closePopup}>
                         Close
                     </button>
+                    
             </div>
 
         </section>

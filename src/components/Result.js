@@ -1,6 +1,8 @@
 import React from 'react'
 import Movie from './Movie'
 
+
+// set of all results I filtred out persons from collection endopoint
 function Results({results, openPopup}) {
     return (
         <section className="results">
