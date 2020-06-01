@@ -6,7 +6,7 @@ function Movie({result, openPopup}) {
         <div className="result" onClick={() => openPopup(result.id, result.media_type)} >
             <img  src={FindPoster(result)} alt= ''/>
             <h3>{findName(result)}</h3>
-            <h3> Ranking: {result.vote_average}</h3>
+            <h3> Popularity: {result.popularity}</h3>
             <h3>Genre: {FindGenre(result)}</h3>
         </div>
     )

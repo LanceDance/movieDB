@@ -38,8 +38,6 @@ class VideoPlayer extends React.PureComponent{
 
   		// load a manifest.
 	  	player.load(manifestUri).then(function() {
-		    // This runs if the asynchronous load is successful.
-		    console.log('The video has now been loaded!');
 	  	}).catch(this.onError);  // onError is executed if the asynchronous load fails.
 
 	}

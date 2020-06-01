@@ -6,9 +6,8 @@ function Popup({selected, closePopup}) {
     return (
         <section className="popup">
             <div className="content">
-                <h2>{selected.title}    <span> 
-                    
-                   </span></h2>
+                <h2>{selected.title} </h2>
+                <p className="rating">Rating: {selected.vote_average}</p> 
                     <div className="plot">
                         <img src={FindPoster(selected)} alt= '' />
                         <p>
@@ -16,7 +15,6 @@ function Popup({selected, closePopup}) {
                         <br/><br/>
                         <VideoPlayer/> 
                         </p>
-                    <p>Popularity: {selected.popularity}</p>
                     </div>
                     <button className="close" onClick={closePopup}>
                         Close
