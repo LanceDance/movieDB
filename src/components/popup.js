@@ -1,18 +1,25 @@
 import React from 'react'
+import ShakaPlayer from 'shaka-player-react';
 
-function Popup(props) {
+function Popup({selected, closePopup}) {
+    const img_url = "http://image.tmdb.org/t/p/w500/";
+    console.log(selected)
     return (
         <section className="popup">
             <div className="content">
-                <h2>{props.selected.original_name} <span>
+                <h2>{selected.title}    <span> 
+                    Popularity: {selected.popularity}
                    </span></h2>
                     <div className="plot">
-                        <img src={props.selected.poster_path} />
-                        <p>{props.selected.overview}</p>
+                        <img src={img_url+selected.poster_path} />
+                        <p>{selected.overview}</p>
                     </div>
-                    <button className="close" onClick={props.closePopup}>
+                    <button className="close" onClick={closePopup}>
                         Close
                     </button>
+                    <ShakaPlayer autoPlay src='/Users/petrochvat/react_project/projectMovie/movieDB/src/playlist.m3u8'>
+                        Play
+                    </ShakaPlayer>
             </div>
 
         </section>

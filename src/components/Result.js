@@ -1,11 +1,13 @@
 import React from 'react'
 import Movie from './Movie'
 
-function Results(props) {
+function Results({results, openPopup}) {
     return (
         <section className="results">
-            {props.results.map(result => (
-                <Movie key= {result.id} result={result}/>
+            {results.map(result => (
+                result.id === "x" ?
+                null
+                : <Movie key= {result.id} result={result} openPopup={openPopup} />
             ))}
         </section>
     )
