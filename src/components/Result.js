@@ -6,11 +6,12 @@ import Movie from './Movie'
 function Results({results, openPopup}) {
     return (
         <section className="results">
-            {results.map(result => (
+            {results.map((result, idx) => (
                 result.media_type === "person" ?
                 null
-                : <Movie key= {result.id} result={result} openPopup={openPopup} />
-            ))}
+                : <Movie key= {idx} result={result} openPopup={openPopup} />
+            ))
+            }
         </section>
     )
 }

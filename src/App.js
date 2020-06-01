@@ -24,7 +24,7 @@ function App() {
     axios(moviesFamilies),
     axios(tvTop)])
     .catch(function(err) {
-          console.log(err); // error handling
+          console.log(err); // some coding error in handling happened
           }) 
                                
   //kind of tricky part. If we make call for top tv, movies we cannot find out what is what so I added to each
@@ -42,9 +42,10 @@ function App() {
   result[2].data.results.forEach((item) => {
       item.media_type = "movie"
     }); 
+
   // initializing setState
   setState({results: result[1].data.results.concat(result[3].data.results, result[0].data.results, result[2].data.results), selected: {} });
- }
+}
   
   useEffect(() => {    
     dataApi();
@@ -55,7 +56,6 @@ function App() {
     if (e.key === "Enter")    
     axios(searchUrlMulti + state.s).then(({data}) => {
       let results  = data.results;
-      console.log(results)
       setState(prevState => {
         return {...prevState, results: results}
       })
@@ -115,5 +115,6 @@ let movieName = findName(state.selected)
     </div>
   );
 }
+
 
 export default App;
