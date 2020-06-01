@@ -1,7 +1,7 @@
 import React from 'react'
-
+import { picture, imgUrl } from "../pictures";
 function Movie({result, openPopup}) {
-    const img_url = "http://image.tmdb.org/t/p/w500/";
+    const img_url = imgUrl;
     let moviename = ''
     let genre = ''
     let genreMovie = ''
@@ -22,7 +22,7 @@ function Movie({result, openPopup}) {
         genreMovie = result.media_type
         genre = result.media_type
     }
-    
+
     if (result.genre_ids.includes(99)) {
         genre = 'documentary'
     }
@@ -32,7 +32,7 @@ function Movie({result, openPopup}) {
     }
 
     if (result.poster_path === null) {
-        poster = 'https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg'
+        poster = picture
     }
     return (
         <div className="result" onClick={() => openPopup(result.id, genreMovie)} >
