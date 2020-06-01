@@ -24,7 +24,7 @@ function App() {
     axios(moviesFamilies),
     axios(tvTop)])
     .catch(function(err) {
-          console.log(err); // some coding error in handling happened
+          console.log(err); // error handling
           }) 
                                
   //kind of tricky part. If we make call for top tv, movies we cannot find out what is what so I added to each
