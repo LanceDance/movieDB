@@ -1,18 +1,32 @@
 import React from 'react'
-
-function Popup(props) {
+import VideoPlayer from './VideoPlayer'
+import {picture, imgUrl} from '../pictures'
+function Popup({selected, closePopup}) {
+    let poster = imgUrl+selected.poster_path
+    if (selected.poster_path === null) {
+        poster = picture
+    }
     return (
         <section className="popup">
             <div className="content">
-                <h2>{props.selected.original_name} <span>
+                <h2>{selected.title}    <span> 
+                    
                    </span></h2>
                     <div className="plot">
-                        <img src={props.selected.poster_path} />
-                        <p>{props.selected.overview}</p>
+                        <img src={poster} alt= '' />
+                        <p>
+                        {selected.overview} 
+                        <br/><br/>
+                        <VideoPlayer/> 
+                         
+                         
+                        </p>
+                    <p>Popularity: {selected.popularity}</p>
                     </div>
-                    <button className="close" onClick={props.closePopup}>
+                    <button className="close" onClick={closePopup}>
                         Close
                     </button>
+                    
             </div>
 
         </section>

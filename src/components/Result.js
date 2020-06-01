@@ -5,7 +5,7 @@ function Results({results, openPopup}) {
     return (
         <section className="results">
             {results.map(result => (
-                result.id === "x" ?
+                result.media_type === "person" ?
                 null
                 : <Movie key= {result.id} result={result} openPopup={openPopup} />
             ))}

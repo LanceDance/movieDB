@@ -1,9 +1,9 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import Search from './components/Search'
 import Result from './components/Result'
 import Popup from './components/Popup'
 import axios from 'axios'
-
+import {moviesTop, moviesDocuments, moviesFamilies, tvTop, searchUrlMulti} from "./apicalls";
 
 function App() {
 
@@ -15,35 +15,39 @@ function App() {
   });
  const dataApi = async () => {
   
-  const getDocuments = await axios("https://api.themoviedb.org/3/movie/popular?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1&with_genres=99");
-  getDocuments.data.results.forEach((item) => {
-    item.gender = "documentary"
-  });
-  const getMovies = await axios("https://api.themoviedb.org/3/movie/top_rated?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1");
-  getMovies.data.results.forEach((item) => {
-    item.gender = "movie"
-  });
-
-  const getTv = await axios("https://api.themoviedb.org/3/tv/top_rated?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1")
-  getTv.data.results.forEach((item) => {
+  let result = await Promise.all([axios(moviesDocuments),
+                                  axios(moviesTop),
+                                  axios(moviesFamilies),
+                                  axios(tvTop)])
+                                  .catch(function(err) {
+                                    console.log(err); // some coding error in handling happened
+                                  }) 
+                               
+  
+  result[3].data.results.forEach((item) => {
     item.gender = "tv"
   });
-  setState({results: getMovies.data.results.concat(getDocuments.data.results, getTv.data.results), selected: {} });
+  result[0].data.results.forEach((item) => {
+    item.gender = "movie"
+  });
+  result[1].data.results.forEach((item) => {
+    item.gender = "movie"
+  });
+  result[2].data.results.forEach((item) => {
+      item.gender = "movie"
+    }); 
+  setState({results: result[1].data.results.concat(result[3].data.results, result[0].data.results, result[2].data.results), selected: {} });
  }
   
   useEffect(() => {    
     dataApi();
   }, [])
 
-  const apiurl = "https://api.themoviedb.org/3/search/multi?api_key=efb6a90a6e954769821cddc6d87e9acb";
-  const apii = "https://api.themoviedb.org/3/"
-  const api_key = "?api_key=efb6a90a6e954769821cddc6d87e9acb"
-  const search_query = apiurl + "&query=" + state.s
   const search = async (e) => {
     if (e.key === "Enter")    
-    axios(apiurl + "&query=" + state.s).then(({data}) => {
+    axios(searchUrlMulti + state.s).then(({data}) => {
       let results  = data.results;
-
+      console.log(results)
       setState(prevState => {
         return {...prevState, results: results}
       })
@@ -62,16 +66,6 @@ function App() {
   })
 
 }
-
-// const getdata = () => {
-//   axios.get(`https://api.themoviedb.org/3/tv/popular?api_key=efb6a90a6e954769821cddc6d87e9acb&language=en-US&page=1`)
-//     .then(({data}) => {
-//       let results = data.results;
-//       setState(prevState => {
-//         return {...prevState, results: results}
-//       })
-//     })
-// }
 let movieName = null
   if (state.selected.title) {
     movieName = state.selected.title
@@ -80,15 +74,12 @@ let movieName = null
     movieName = state.selected.name
   }
 
-  console.log(movieName)
   const openPopup = (id, gender) => {
     const apiUrl = "https://api.themoviedb.org/3/"+gender+"/"+id+"?api_key=efb6a90a6e954769821cddc6d87e9acb";
-    console.log(apiUrl)
     axios(apiUrl)
     .then(({ data }) => 
     {
       let result = data;
-      console.log(result)
       setState(prevState => {
         return {...prevState, selected: result}
       })

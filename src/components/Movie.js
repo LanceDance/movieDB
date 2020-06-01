@@ -1,10 +1,12 @@
 import React from 'react'
-import { render } from '@testing-library/react';
-
+import { picture, imgUrl } from "../pictures";
 function Movie({result, openPopup}) {
-    const img_url = "http://image.tmdb.org/t/p/w500/";
+    const img_url = imgUrl;
     let moviename = ''
-    let gender = ''
+    let genre = ''
+    let genreMovie = ''
+    let poster = ''
+    poster = img_url+result.poster_path
     if (result.title) {
         moviename = result.title
     }
@@ -13,26 +15,31 @@ function Movie({result, openPopup}) {
     }
 
     if (result.gender) {
-        gender = result.gender
+        genreMovie = result.gender
+        genre = result.gender
     }
-    
-    // else if (99 in result.genres) {
-    //     gender = 'documentary'
-    // }
     else {
-        gender = result.media_type
+        genreMovie = result.media_type
+        genre = result.media_type
     }
-    console.log(result.genre_ids)
-    if (result.genre_ids.find(99)) {
-        gender = 'documentary'
+
+    if (result.genre_ids.includes(99)) {
+        genre = 'documentary'
     }
-    // if (result.last_episode_to_air)
+    else if (result.genre_ids.includes(10751)) {
+        genre = 'family'
+        genreMovie = 'movie'
+    }
+
+    if (result.poster_path === null) {
+        poster = picture
+    }
     return (
-        <div className="result" onClick={() => openPopup(result.id, gender)} >
-            <img src={img_url+result.poster_path}/>
+        <div className="result" onClick={() => openPopup(result.id, genreMovie)} >
+            <img  src={poster} alt= ''/>
             <h3>{moviename}</h3>
             <h3> Ranking: {result.vote_average}</h3>
-            <h3>Gender: {gender}</h3>
+            <h3>Genre: {genre}</h3>
         </div>
     )
     
