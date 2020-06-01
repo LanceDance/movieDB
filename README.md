@@ -17,5 +17,8 @@ The app use rest api of The Movie db. For sucessulf rest call you need apikey (i
 App is slightly different then Wireframes because I wanted to try different way. Just one window with popup window for details of movie and with video.
 In the window there is search bar for searching movies, tv's. If you want to go back to original set of movies just send empty search in search bar. 
 
-Best movies: endpoint: /movie/top_rated
+Most popular movies: /movie/popular
+Most popular TVs: /tv/popular
+Documentary and families they are from endpoint discover with genres =[99,10751]
+if someone wants to change calls to different endpoint no problem to change in apicalls.js
 
